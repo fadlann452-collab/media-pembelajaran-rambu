@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TopBar from '../components/TopBar';
 import ProgressRing from '../components/ProgressRing';
-import data from '../data/rambuData.json';
+import data from '../data/RambuData.json';
 import { playWin } from '../utils/sound';
 
 function Confetti() {

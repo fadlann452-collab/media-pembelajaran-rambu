@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TopBar from '../components/TopBar';
 import RambuSVG from '../components/RambuSVG';
-import data from '../data/rambuData.json';
+import data from '../data/RambuData.json';
 import { playCorrect, playWrong, playWin } from '../utils/sound';
 
 export default function GameScreen({ onHome, onMarkDone }) {

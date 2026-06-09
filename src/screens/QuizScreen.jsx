@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TopBar from '../components/TopBar';
-import data from '../data/rambuData.json';
+import data from '../data/RambuData.json';
 import { playCorrect, playWrong } from '../utils/sound';
 
 export default function QuizScreen({ onHome, onFinish }) {

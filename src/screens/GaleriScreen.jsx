@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TopBar from '../components/TopBar';
-import RambuSVG from '../components/Rambusvg';
-import data from '../data/rambuData.json';
+import RambuSVG from '../components/RambusSVG';
+import data from '../data/RambuData.json';
 
 const TYPE = {
   warning:     { label: 'Peringatan', badge: 'bg-yellow-100 text-yellow-800', border: 'border-yellow-300', bg: 'bg-yellow-50' },
