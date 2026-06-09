@@ -1,0 +1,48 @@
+{
+  "rambuList": [
+    { "id":1,"type":"warning","name":"Tikungan Kanan","desc":"Ada tikungan tajam ke kanan. Kurangi kecepatan!","fungsi":"Mengingatkan pengemudi agar waspada saat menikung ke kanan.","color":"#f59e0b","shape":"triangle","symbol":"↱","bg":"#fef3c7","borderColor":"#fbbf24" },
+    { "id":2,"type":"warning","name":"Jalan Licin","desc":"Permukaan jalan licin, terutama saat hujan. Hati-hati!","fungsi":"Mengingatkan pengemudi agar tidak ngerem mendadak di jalan licin.","color":"#f59e0b","shape":"triangle","symbol":"〰","bg":"#fef3c7","borderColor":"#fbbf24" },
+    { "id":3,"type":"warning","name":"Perlintasan Kereta","desc":"Ada perlintasan rel kereta api. Wajib berhenti dan lihat!","fungsi":"Memperingatkan pengemudi untuk berhenti sebelum menyeberangi rel.","color":"#f59e0b","shape":"triangle","symbol":"🚂","bg":"#fef3c7","borderColor":"#fbbf24" },
+    { "id":4,"type":"warning","name":"Persimpangan","desc":"Ada persimpangan empat arah. Waspadai kendaraan lain!","fungsi":"Mengingatkan pengemudi untuk siap menghadapi persimpangan.","color":"#f59e0b","shape":"triangle","symbol":"✚","bg":"#fef3c7","borderColor":"#fbbf24" },
+    { "id":5,"type":"warning","name":"Turunan Curam","desc":"Jalan menurun tajam. Gunakan gigi rendah!","fungsi":"Memberitahu pengemudi agar menyiapkan gigi rendah saat turun.","color":"#f59e0b","shape":"triangle","symbol":"↘","bg":"#fef3c7","borderColor":"#fbbf24" },
+    { "id":6,"type":"prohibition","name":"Dilarang Masuk","desc":"Kendaraan dilarang masuk dari arah ini.","fungsi":"Melarang semua kendaraan masuk dari arah yang ditandai.","color":"#ef4444","shape":"circle","symbol":"—","bg":"#fee2e2","borderColor":"#fca5a5" },
+    { "id":7,"type":"prohibition","name":"Dilarang Parkir","desc":"Kendaraan tidak boleh parkir di area ini.","fungsi":"Menjaga kelancaran lalu lintas agar tidak ada yang parkir sembarangan.","color":"#ef4444","shape":"circle","symbol":"P","bg":"#fee2e2","borderColor":"#fca5a5" },
+    { "id":8,"type":"prohibition","name":"Batas Kecepatan 40","desc":"Kecepatan tidak boleh lebih dari 40 km/jam.","fungsi":"Membatasi kecepatan di area padat atau rawan kecelakaan.","color":"#ef4444","shape":"circle","symbol":"40","bg":"#fee2e2","borderColor":"#fca5a5" },
+    { "id":9,"type":"prohibition","name":"Dilarang Belok Kanan","desc":"Kendaraan dilarang belok ke kanan di sini.","fungsi":"Mengatur arus lalu lintas agar tidak terjadi kemacetan.","color":"#ef4444","shape":"circle","symbol":"↱","bg":"#fee2e2","borderColor":"#fca5a5" },
+    { "id":10,"type":"prohibition","name":"Dilarang Mendahului","desc":"Kendaraan dilarang menyalip kendaraan lain.","fungsi":"Mencegah kecelakaan di jalan sempit atau tikungan.","color":"#ef4444","shape":"circle","symbol":"⤢","bg":"#fee2e2","borderColor":"#fca5a5" },
+    { "id":11,"type":"command","name":"Wajib Belok Kiri","desc":"Semua kendaraan harus belok kiri.","fungsi":"Memaksa kendaraan belok kiri untuk mengatur arus.","color":"#3b82f6","shape":"circle-cmd","symbol":"↰","bg":"#dbeafe","borderColor":"#93c5fd" },
+    { "id":12,"type":"command","name":"Wajib Lurus","desc":"Semua kendaraan harus jalan lurus ke depan.","fungsi":"Mengatur kendaraan agar tetap lurus untuk kelancaran arus.","color":"#3b82f6","shape":"circle-cmd","symbol":"↑","bg":"#dbeafe","borderColor":"#93c5fd" },
+    { "id":13,"type":"command","name":"Jalur Pejalan Kaki","desc":"Jalur ini khusus untuk pejalan kaki.","fungsi":"Melindungi pejalan kaki dengan jalur yang aman.","color":"#3b82f6","shape":"circle-cmd","symbol":"🚶","bg":"#dbeafe","borderColor":"#93c5fd" },
+    { "id":14,"type":"info","name":"Rumah Sakit","desc":"Menunjukkan arah ke rumah sakit terdekat.","fungsi":"Membantu pengguna jalan menemukan fasilitas kesehatan.","color":"#22c55e","shape":"square","symbol":"🏥","bg":"#d1fae5","borderColor":"#6ee7b7" },
+    { "id":15,"type":"info","name":"SPBU","desc":"Menunjukkan lokasi stasiun pengisian bahan bakar.","fungsi":"Membantu pengendara menemukan tempat isi bensin.","color":"#22c55e","shape":"square","symbol":"⛽","bg":"#d1fae5","borderColor":"#6ee7b7" },
+    { "id":16,"type":"info","name":"Tempat Parkir","desc":"Menunjukkan lokasi area parkir tersedia.","fungsi":"Membantu pengendara menemukan lokasi parkir resmi.","color":"#22c55e","shape":"square","symbol":"P","bg":"#d1fae5","borderColor":"#6ee7b7" },
+    { "id":17,"type":"info","name":"Area Istirahat","desc":"Lokasi tempat istirahat dengan toilet dan makan.","fungsi":"Memberitahu pengendara jarak jauh tentang fasilitas istirahat.","color":"#22c55e","shape":"square","symbol":"🍽","bg":"#d1fae5","borderColor":"#6ee7b7" }
+  ],
+  "gameRambu": [
+    { "id":1,"shape":"triangle","color":"#f59e0b","desc":"Rambu segitiga kuning dengan tanda seru","answer":"Rambu Peringatan","options":["Rambu Larangan","Rambu Peringatan","Rambu Perintah","Rambu Petunjuk"] },
+    { "id":2,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran putih tepi merah dengan angka 60","answer":"Batas Kecepatan 60","options":["Batas Kecepatan 60","Wajib 60 km/jam","Dilarang Masuk","Boleh Parkir"] },
+    { "id":3,"shape":"circle-cmd","color":"#3b82f6","desc":"Rambu lingkaran biru dengan panah lurus ke atas","answer":"Wajib Jalan Lurus","options":["Dilarang Lurus","Wajib Jalan Lurus","Jalan Satu Arah","Bebas Hambatan"] },
+    { "id":4,"shape":"square","color":"#22c55e","desc":"Rambu persegi hijau dengan huruf P putih","answer":"Tempat Parkir","options":["Dilarang Parkir","Tempat Parkir","Pom Bensin","Rumah Sakit"] },
+    { "id":5,"shape":"triangle","color":"#f59e0b","desc":"Rambu segitiga kuning dengan gambar rel kereta","answer":"Perlintasan Kereta","options":["Perlintasan Kereta","Dilarang Masuk","Stasiun Kereta","Jalan Rusak"] },
+    { "id":6,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran merah dengan garis horizontal putih","answer":"Dilarang Masuk","options":["Dilarang Masuk","Batas Kecepatan","Wajib Berhenti","Dilarang Parkir"] },
+    { "id":7,"shape":"circle-cmd","color":"#3b82f6","desc":"Rambu lingkaran biru dengan panah melengkung ke kiri","answer":"Wajib Belok Kiri","options":["Dilarang Belok Kiri","Wajib Belok Kiri","Dilarang Belok Kanan","Wajib Putar Balik"] }
+  ],
+  "quizQuestions": [
+    { "id":1,"question":"Rambu berbentuk segitiga berwarna kuning/oranye termasuk jenis rambu apa?","options":["Rambu Perintah","Rambu Peringatan","Rambu Larangan","Rambu Petunjuk"],"answer":1,"penjelasan":"Rambu peringatan selalu berbentuk segitiga dengan warna dasar kuning/oranye." },
+    { "id":2,"question":"Rambu lingkaran merah dengan garis horizontal putih berarti?","options":["Wajib Lurus","Dilarang Masuk","Tempat Parkir","Jalan Licin"],"answer":1,"penjelasan":"Lingkaran merah dengan garis putih horizontal adalah tanda dilarang masuk." },
+    { "id":3,"question":"Warna dasar rambu PERINTAH adalah?","options":["Merah","Kuning","Biru","Hijau"],"answer":2,"penjelasan":"Rambu perintah berwarna dasar biru dengan gambar berwarna putih." },
+    { "id":4,"question":"Rambu petunjuk biasanya berwarna hijau. Fungsinya adalah?","options":["Memperingatkan bahaya","Melarang sesuatu","Memberikan informasi & arah","Memerintahkan kecepatan"],"answer":2,"penjelasan":"Rambu petunjuk berisi informasi arah, lokasi fasilitas, dan nama tempat." },
+    { "id":5,"question":"Jika ada rambu 'Batas Kecepatan 60', artinya kendaraan?","options":["Harus tepat 60 km/jam","Boleh melewati 60 km/jam","Tidak boleh melebihi 60 km/jam","Harus berhenti setelah 60m"],"answer":2,"penjelasan":"Rambu batas kecepatan berarti kendaraan tidak boleh melebihi angka yang tertera." },
+    { "id":6,"question":"Rambu segitiga dengan gambar rel kereta berfungsi untuk?","options":["Melarang kereta lewat","Memperingatkan ada perlintasan kereta","Menunjukkan arah stasiun","Memerintahkan belok kiri"],"answer":1,"penjelasan":"Rambu ini memperingatkan pengemudi bahwa di depan ada perlintasan rel kereta." },
+    { "id":7,"question":"Rambu lingkaran biru dengan panah ke kiri berarti?","options":["Dilarang belok kiri","Wajib belok kiri","Ada tikungan kiri","Petunjuk arah kiri"],"answer":1,"penjelasan":"Rambu lingkaran biru adalah rambu perintah, panah ke kiri berarti wajib belok kiri." },
+    { "id":8,"question":"Siapa yang wajib mematuhi rambu lalu lintas?","options":["Hanya pengendara motor","Hanya pengemudi mobil","Semua pengguna jalan","Hanya polisi lalu lintas"],"answer":2,"penjelasan":"Semua pengguna jalan termasuk pejalan kaki wajib mematuhi rambu lalu lintas." },
+    { "id":9,"question":"Rambu larangan parkir biasanya berbentuk?","options":["Segitiga kuning","Lingkaran merah dengan huruf P dicoret","Persegi hijau","Lingkaran biru"],"answer":1,"penjelasan":"Rambu larangan parkir berbentuk lingkaran merah dengan huruf P yang dicoret." },
+    { "id":10,"question":"Fungsi utama rambu lalu lintas adalah?","options":["Menghias jalan raya","Menunjukkan batas kota","Mengatur lalu lintas agar aman & tertib","Tempat bersandar ketika lelah"],"answer":2,"penjelasan":"Rambu lalu lintas berfungsi mengatur, memperingatkan, dan menginformasikan pengguna jalan." }
+  ],
+  "badges": [
+    { "minScore":90,"icon":"🏆","label":"Juara Rambu","color":"#f59e0b","message":"Luar biasa! Kamu ahli rambu lalu lintas!" },
+    { "minScore":70,"icon":"🥈","label":"Pengemudi Hebat","color":"#94a3b8","message":"Bagus! Kamu sudah paham rambu dengan baik." },
+    { "minScore":50,"icon":"🥉","label":"Pengemudi Pemula","color":"#f97316","message":"Lumayan! Coba pelajari lagi materinya ya!" },
+    { "minScore":0,"icon":"📚","label":"Terus Semangat","color":"#6366f1","message":"Jangan menyerah! Kamu pasti bisa lebih baik!" }
+  ]
+}

@@ -1,0 +1,605 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0f9ff;min-height:100vh}
+:root{
+--sky:#38bdf8;--sun:#fbbf24;--grass:#4ade80;--red:#ef4444;--blue:#3b82f6;
+--orange:#f97316;--purple:#a855f7;--pink:#ec4899;--white:#fff;
+--shadow:0 4px 20px rgba(0,0,0,.12);
+}
+.app{min-height:600px;background:linear-gradient(135deg,#e0f2fe 0%,#f0fdf4 50%,#fef9c3 100%)}
+.fredoka{font-family:'Fredoka One',cursive}
+.btn{border:none;cursor:pointer;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:800;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;padding:14px 32px;font-size:18px;box-shadow:0 6px 20px rgba(99,102,241,.4)}
+.btn-green{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;padding:12px 28px;font-size:16px;box-shadow:0 4px 15px rgba(34,197,94,.4)}
+.btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;padding:12px 28px;font-size:16px}
+.btn-orange{background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;padding:12px 28px;font-size:16px}
+.btn-sm{padding:8px 20px;font-size:14px}
+.card{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:24px}
+.badge{display:inline-block;padding:4px 14px;border-radius:50px;font-weight:700;font-size:13px}
+.progress-bar{height:12px;background:#e2e8f0;border-radius:50px;overflow:hidden}
+.progress-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#38bdf8,#6366f1);transition:width .5s}
+.tag-warning{background:#fef3c7;color:#92400e}
+.tag-prohibition{background:#fee2e2;color:#991b1b}
+.tag-command{background:#dbeafe;color:#1e40af}
+.tag-info{background:#d1fae5;color:#065f46}
+.rambu-card{background:#fff;border-radius:20px;padding:16px;cursor:pointer;transition:all .25s;border:3px solid transparent;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.rambu-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.rambu-card.selected{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
+.rambu-svg{width:80px;height:80px;margin:0 auto 10px}
+.quiz-opt{background:#f8fafc;border:2.5px solid #e2e8f0;border-radius:16px;padding:14px 18px;cursor:pointer;font-size:15px;font-weight:600;transition:all .2s;text-align:left;width:100%}
+.quiz-opt:hover{background:#eff6ff;border-color:#93c5fd}
+.quiz-opt.correct{background:#dcfce7;border-color:#22c55e;color:#166534}
+.quiz-opt.wrong{background:#fee2e2;border-color:#ef4444;color:#991b1b}
+.quiz-opt.selected{background:#eff6ff;border-color:#3b82f6}
+.screen{padding:20px;max-width:720px;margin:0 auto}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal{background:#fff;border-radius:24px;padding:28px;max-width:400px;width:100%;animation:popIn .3s ease}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-bounce{animation:bounce 1s infinite}
+.animate-spin{animation:spin 2s linear infinite}
+.animate-fade{animation:fadeIn .5s ease forwards}
+.star{display:inline-block;font-size:28px}
+.confetti{position:fixed;pointer-events:none;z-index:200}
+</style>
+
+<div class="app" id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script>
+const {useState,useEffect,useRef,useCallback}=React;
+const h=React.createElement;
+
+const DATA={
+  rambuList:[
+    {id:1,type:'warning',name:'Tikungan Berbahaya',desc:'Peringatan ada tikungan tajam ke kanan. Kurangi kecepatan!',color:'#f59e0b',shape:'triangle',symbol:'↱',bg:'#fef3c7'},
+    {id:2,type:'warning',name:'Jalan Licin',desc:'Peringatan permukaan jalan licin. Hati-hati saat hujan!',color:'#f59e0b',shape:'triangle',symbol:'〰',bg:'#fef3c7'},
+    {id:3,type:'warning',name:'Rel Kereta',desc:'Peringatan ada perlintasan rel kereta api. Berhenti dan lihat!',color:'#f59e0b',shape:'triangle',symbol:'🚂',bg:'#fef3c7'},
+    {id:4,type:'warning',name:'Persimpangan',desc:'Peringatan ada persimpangan jalan. Kurangi kecepatan dan waspada!',color:'#f59e0b',shape:'triangle',symbol:'✚',bg:'#fef3c7'},
+    {id:5,type:'prohibition',name:'Dilarang Masuk',desc:'Kendaraan dilarang masuk dari arah ini. Cari jalan lain!',color:'#ef4444',shape:'circle',symbol:'—',bg:'#fee2e2'},
+    {id:6,type:'prohibition',name:'Dilarang Parkir',desc:'Kendaraan tidak boleh parkir di area ini.',color:'#ef4444',shape:'circle',symbol:'P',bg:'#fee2e2'},
+    {id:7,type:'prohibition',name:'Batas Kecepatan 40',desc:'Kendaraan tidak boleh melebihi 40 km/jam.',color:'#ef4444',shape:'circle',symbol:'40',bg:'#fee2e2'},
+    {id:8,type:'prohibition',name:'Dilarang Belok Kanan',desc:'Kendaraan tidak boleh berbelok ke kanan.',color:'#ef4444',shape:'circle',symbol:'↱',bg:'#fee2e2'},
+    {id:9,type:'command',name:'Wajib Belok Kiri',desc:'Semua kendaraan harus belok kiri. Ikuti perintah ini!',color:'#3b82f6',shape:'circle-cmd',symbol:'↰',bg:'#dbeafe'},
+    {id:10,type:'command',name:'Wajib Lurus',desc:'Semua kendaraan harus jalan lurus ke depan.',color:'#3b82f6',shape:'circle-cmd',symbol:'↑',bg:'#dbeafe'},
+    {id:11,type:'command',name:'Jalur Pejalan Kaki',desc:'Area ini wajib digunakan oleh pejalan kaki saja.',color:'#3b82f6',shape:'circle-cmd',symbol:'🚶',bg:'#dbeafe'},
+    {id:12,type:'info',name:'Rumah Sakit',desc:'Menunjukkan arah ke rumah sakit terdekat.',color:'#22c55e',shape:'square',symbol:'🏥',bg:'#d1fae5'},
+    {id:13,type:'info',name:'SPBU / Pom Bensin',desc:'Menunjukkan arah ke stasiun pengisian bahan bakar.',color:'#22c55e',shape:'square',symbol:'⛽',bg:'#d1fae5'},
+    {id:14,type:'info',name:'Tempat Parkir',desc:'Menunjukkan lokasi area parkir yang tersedia.',color:'#22c55e',shape:'square',symbol:'P',bg:'#d1fae5'},
+    {id:15,type:'info',name:'Tempat Istirahat',desc:'Menunjukkan lokasi area istirahat untuk pengendara.',color:'#22c55e',shape:'square',symbol:'🍽',bg:'#d1fae5'},
+  ],
+  quizQuestions:[
+    {id:1,q:'Rambu berbentuk segitiga berwarna kuning/oranye termasuk jenis rambu apa?',opts:['Rambu Perintah','Rambu Peringatan','Rambu Larangan','Rambu Petunjuk'],ans:1},
+    {id:2,q:'Rambu lingkaran merah dengan garis horizontal putih berarti?',opts:['Wajib Lurus','Dilarang Masuk','Tempat Parkir','Jalan Licin'],ans:1},
+    {id:3,q:'Warna dasar rambu PERINTAH adalah?',opts:['Merah','Kuning','Biru','Hijau'],ans:2},
+    {id:4,q:'Rambu petunjuk berwarna hijau biasanya menunjukkan?',opts:['Bahaya di jalan','Larangan parkir','Informasi & arah tujuan','Kecepatan maksimum'],ans:2},
+    {id:5,q:'Jika ada rambu "Batas Kecepatan 60", artinya kendaraan...?',opts:['Harus melaju tepat 60 km/jam','Boleh melewati 60 km/jam','Tidak boleh melebihi 60 km/jam','Harus berhenti setelah 60 km/jam'],ans:2},
+    {id:6,q:'Rambu segitiga dengan gambar rel kereta berfungsi untuk?',opts:['Melarang kereta lewat','Memperingatkan ada perlintasan kereta','Menunjukkan arah stasiun','Memerintahkan belok kiri'],ans:1},
+    {id:7,q:'Rambu lingkaran biru dengan panah ke kiri berarti?',opts:['Dilarang belok kiri','Wajib belok kiri','Ada tikungan kiri','Petunjuk arah kiri'],ans:1},
+    {id:8,q:'Siapa yang wajib mematuhi rambu lalu lintas?',opts:['Hanya pengendara motor','Hanya pengemudi mobil','Semua pengguna jalan','Hanya polisi lalu lintas'],ans:2},
+    {id:9,q:'Rambu yang melarang kendaraan parkir biasanya berbentuk?',opts:['Segitiga kuning','Lingkaran merah dengan huruf P dicoret','Persegi hijau','Lingkaran biru'],ans:1},
+    {id:10,q:'Fungsi utama rambu lalu lintas adalah?',opts:['Menghias jalan raya','Menunjukkan batas kota','Mengatur & memberi informasi agar lalu lintas aman','Tempat bersandar ketika lelah'],ans:2},
+  ],
+  gameRambu:[
+    {img:'triangle',color:'#f59e0b',desc:'Rambu segitiga kuning dengan tanda seru',answer:'Rambu Peringatan',opts:['Rambu Larangan','Rambu Peringatan','Rambu Perintah','Rambu Petunjuk']},
+    {img:'circle-red',color:'#ef4444',desc:'Rambu lingkaran merah dengan angka 60',answer:'Batas Kecepatan 60',opts:['Batas Kecepatan 60','Wajib 60 km/jam','Boleh Parkir','Dilarang Masuk']},
+    {img:'circle-blue',color:'#3b82f6',desc:'Rambu lingkaran biru dengan panah lurus ke atas',answer:'Wajib Lurus',opts:['Dilarang Lurus','Wajib Lurus','Jalan Satu Arah','Rambu Peringatan']},
+    {img:'square-green',color:'#22c55e',desc:'Rambu persegi hijau dengan tanda P',answer:'Tempat Parkir',opts:['Dilarang Parkir','Tempat Parkir','Pom Bensin','Rumah Sakit']},
+    {img:'triangle',color:'#f59e0b',desc:'Rambu segitiga dengan gambar rel kereta',answer:'Perlintasan Kereta',opts:['Perlintasan Kereta','Dilarang Kereta','Stasiun Kereta','Jalan Licin']},
+  ]
+};
+
+function RambuSVG({type,color,size=80}){
+  const s=size,h2=s/2;
+  if(type==='triangle'){
+    const pts=`${h2},${s*0.08} ${s*0.95},${s*0.92} ${s*0.05},${s*0.92}`;
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('polygon',{points:pts,fill:color,stroke:'#fff',strokeWidth:3}),
+      h('text',{x:h2,y:s*0.72,textAnchor:'middle',fill:'#fff',fontSize:s*0.4,fontWeight:'bold',fontFamily:'sans-serif'},'!')
+    );
+  }
+  if(type==='circle'||type==='circle-red'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('circle',{cx:h2,cy:h2,r:s*0.45,fill:'#fff',stroke:'#ef4444',strokeWidth:s*0.08}),
+      h('rect',{x:s*0.2,y:h2-s*0.07,width:s*0.6,height:s*0.14,fill:'#ef4444',rx:s*0.06})
+    );
+  }
+  if(type==='circle-cmd'||type==='circle-blue'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('circle',{cx:h2,cy:h2,r:s*0.45,fill:'#3b82f6'}),
+      h('text',{x:h2,y:h2+s*0.14,textAnchor:'middle',fill:'#fff',fontSize:s*0.45,fontFamily:'sans-serif'},'↑')
+    );
+  }
+  if(type==='square'||type==='square-green'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('rect',{x:s*0.08,y:s*0.08,width:s*0.84,height:s*0.84,fill:'#22c55e',rx:s*0.1}),
+      h('text',{x:h2,y:h2+s*0.14,textAnchor:'middle',fill:'#fff',fontSize:s*0.36,fontWeight:'bold',fontFamily:'sans-serif'},'P')
+    );
+  }
+  return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+    h('circle',{cx:h2,cy:h2,r:s*0.45,fill:color||'#94a3b8'})
+  );
+}
+
+function RambuIcon({rambu,size=72}){
+  const s=size,h2=s/2;
+  const sym=rambu.symbol||'?';
+  if(rambu.shape==='triangle'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('polygon',{points:`${h2},${s*.08} ${s*.93},${s*.92} ${s*.07},${s*.92}`,fill:rambu.color,stroke:'#fff',strokeWidth:2}),
+      h('text',{x:h2,y:s*.7,textAnchor:'middle',fill:'#7c3f00',fontSize:s*.32,fontFamily:'sans-serif'},sym)
+    );
+  }
+  if(rambu.shape==='circle'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('circle',{cx:h2,cy:h2,r:s*.44,fill:'#fff',stroke:'#ef4444',strokeWidth:s*.08}),
+      h('text',{x:h2,y:h2+s*.12,textAnchor:'middle',fill:'#ef4444',fontSize:sym.length>2?s*.22:s*.3,fontWeight:'bold',fontFamily:'sans-serif'},sym)
+    );
+  }
+  if(rambu.shape==='circle-cmd'){
+    return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+      h('circle',{cx:h2,cy:h2,r:s*.44,fill:'#3b82f6'}),
+      h('text',{x:h2,y:h2+s*.13,textAnchor:'middle',fill:'#fff',fontSize:s*.38,fontFamily:'sans-serif'},sym)
+    );
+  }
+  return h('svg',{width:s,height:s,viewBox:`0 0 ${s} ${s}`},
+    h('rect',{x:s*.08,y:s*.08,width:s*.84,height:s*.84,fill:'#22c55e',rx:s*.1}),
+    h('text',{x:h2,y:h2+s*.13,textAnchor:'middle',fill:'#fff',fontSize:s*.36,fontFamily:'sans-serif'},sym)
+  );
+}
+
+function ProgressBar({current,total}){
+  const pct=Math.round((current/total)*100);
+  return h('div',{style:{marginBottom:16}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',marginBottom:6}},
+      h('span',{style:{fontSize:13,color:'#64748b',fontWeight:600}},`Langkah ${current} dari ${total}`),
+      h('span',{style:{fontSize:13,color:'#6366f1',fontWeight:700}},`${pct}%`)
+    ),
+    h('div',{className:'progress-bar'},h('div',{className:'progress-fill',style:{width:`${pct}%`}}))
+  );
+}
+
+function playSound(type){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(type==='correct'){o.frequency.value=880;g.gain.setValueAtTime(.3,ctx.currentTime);o.frequency.setValueAtTime(1100,ctx.currentTime+.1);}
+    else{o.frequency.value=300;g.gain.setValueAtTime(.3,ctx.currentTime);o.frequency.setValueAtTime(200,ctx.currentTime+.15);}
+    o.start();g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.4);o.stop(ctx.currentTime+.4);
+  }catch(e){}
+}
+
+// ====== SCREENS ======
+
+function LandingScreen({onStart}){
+  return h('div',{className:'screen animate-fade',style:{textAlign:'center',paddingTop:32}},
+    h('div',{style:{fontSize:60,marginBottom:8,animation:'bounce 2s infinite'}},'🚦'),
+    h('h1',{className:'fredoka',style:{fontSize:42,color:'#1e40af',lineHeight:1.1,marginBottom:8}},'Belajar Rambu',h('br'),'Lalu Lintas!'),
+    h('p',{style:{color:'#475569',fontSize:16,marginBottom:24,lineHeight:1.6}},'Hai, Sobat SD Kelas 4! 👋',h('br'),'Ayo kenali rambu-rambu lalu lintas',h('br'),'yang ada di jalan raya.'),
+    h('div',{style:{display:'flex',gap:16,justifyContent:'center',flexWrap:'wrap',marginBottom:32}},
+      h('div',{style:{background:'#fffbeb',borderRadius:20,padding:'16px 20px',textAlign:'center',minWidth:110,boxShadow:'0 4px 12px rgba(0,0,0,.08)'}},
+        h('div',{style:{fontSize:32,marginBottom:4}},'📚'),
+        h('div',{style:{fontSize:13,fontWeight:700,color:'#92400e'}})
+      ),
+      ...[['⚠️','Peringatan'],['🚫','Larangan'],['🔵','Perintah'],['🟢','Petunjuk']].map(([ic,label])=>
+        h('div',{key:label,style:{background:'#fff',borderRadius:20,padding:'14px 18px',textAlign:'center',boxShadow:'0 3px 10px rgba(0,0,0,.08)'}},
+          h('div',{style:{fontSize:28}}),
+          h('div',{style:{fontSize:24,marginBottom:4}},ic),
+          h('div',{style:{fontSize:12,fontWeight:700,color:'#475569'}},label)
+        )
+      )
+    ),
+    h('div',{style:{display:'flex',justifyContent:'center'}},
+      h('button',{className:'btn btn-primary',onClick:onStart,style:{fontSize:20,padding:'16px 40px'}},
+        '🚀 Mulai Belajar!'
+      )
+    ),
+    h('div',{style:{marginTop:20,display:'flex',gap:24,justifyContent:'center',flexWrap:'wrap'}},
+      ...[['🎮','Game Seru'],['📝','Quiz 10 Soal'],['🏆','Raih Badge']].map(([ic,t])=>
+        h('div',{key:t,style:{display:'flex',alignItems:'center',gap:6,fontSize:14,color:'#64748b',fontWeight:600}},
+          h('span',null,ic),h('span',null,t)
+        )
+      )
+    )
+  );
+}
+
+function TujuanScreen({onNext,onBack}){
+  const goals=[
+    {ic:'🔍',text:'Menjelaskan pengertian rambu lalu lintas'},
+    {ic:'⚠️',text:'Mengenal jenis-jenis rambu peringatan'},
+    {ic:'🚫',text:'Memahami rambu larangan dan artinya'},
+    {ic:'🔵',text:'Mengetahui rambu perintah di jalan'},
+    {ic:'🟢',text:'Membaca informasi dari rambu petunjuk'},
+    {ic:'🎯',text:'Mematuhi rambu lalu lintas demi keselamatan'},
+  ];
+  return h('div',{className:'screen animate-fade'},
+    h('div',{style:{background:'linear-gradient(135deg,#3b82f6,#6366f1)',borderRadius:24,padding:'24px',marginBottom:20,color:'#fff',textAlign:'center'}},
+      h('div',{style:{fontSize:40,marginBottom:8}},'🎯'),
+      h('h2',{className:'fredoka',style:{fontSize:28,color:'#fff'}},'Tujuan Pembelajaran')
+    ),
+    h('div',{style:{display:'grid',gap:12,marginBottom:24}},
+      goals.map((g,i)=>h('div',{key:i,className:'card animate-fade',style:{display:'flex',gap:16,alignItems:'center',padding:'16px 20px',animationDelay:`${i*.08}s`}},
+        h('span',{style:{fontSize:28,minWidth:36}},g.ic),
+        h('span',{style:{fontSize:15,fontWeight:600,color:'#1e293b',lineHeight:1.4}},g.text)
+      ))
+    ),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'space-between'}},
+      h('button',{className:'btn btn-orange btn-sm',onClick:onBack},'← Kembali'),
+      h('button',{className:'btn btn-green',onClick:onNext},'Lanjut Materi →')
+    )
+  );
+}
+
+function MateriScreen({onNext,onBack}){
+  const [tab,setTab]=useState(0);
+  const tabs=[
+    {label:'Pengertian',ic:'📖',color:'#6366f1'},
+    {label:'Peringatan',ic:'⚠️',color:'#f59e0b'},
+    {label:'Larangan',ic:'🚫',color:'#ef4444'},
+    {label:'Perintah',ic:'🔵',color:'#3b82f6'},
+    {label:'Petunjuk',ic:'🟢',color:'#22c55e'},
+  ];
+  const contents=[
+    h('div',{className:'animate-fade'},
+      h('h3',{style:{fontSize:20,color:'#4338ca',marginBottom:12}},'Apa itu Rambu Lalu Lintas?'),
+      h('p',{style:{color:'#475569',lineHeight:1.8,marginBottom:16}},'Rambu lalu lintas adalah tanda-tanda yang dipasang di pinggir atau di atas jalan untuk memberikan informasi, peringatan, larangan, dan perintah kepada para pengguna jalan.'),
+      h('div',{style:{background:'#eff6ff',borderRadius:16,padding:16,marginBottom:12}},
+        h('p',{style:{fontWeight:700,color:'#1e40af',marginBottom:8}},'🌟 Fungsi Rambu Lalu Lintas:'),
+        h('ul',{style:{paddingLeft:20,color:'#1e40af',lineHeight:2}},
+          h('li',null,'Menjaga keselamatan pengguna jalan'),
+          h('li',null,'Mengatur kelancaran lalu lintas'),
+          h('li',null,'Mencegah terjadinya kecelakaan'),
+          h('li',null,'Memberikan informasi arah & fasilitas')
+        )
+      ),
+      h('div',{style:{background:'#f0fdf4',borderRadius:16,padding:16}},
+        h('p',{style:{fontWeight:700,color:'#166534',marginBottom:8}},'👮 Siapa yang Membuat?'),
+        h('p',{style:{color:'#166534',lineHeight:1.7}},'Rambu lalu lintas dibuat dan dipasang oleh pemerintah melalui Dinas Perhubungan. Semua pengguna jalan WAJIB mematuhinya!')
+      )
+    ),
+    h('div',{className:'animate-fade'},
+      h('h3',{style:{fontSize:20,color:'#92400e',marginBottom:8}},'⚠️ Rambu Peringatan'),
+      h('div',{style:{background:'#fef3c7',borderRadius:16,padding:16,marginBottom:12}},
+        h('p',{style:{fontWeight:700,color:'#92400e',marginBottom:4}},'Bentuk: Segitiga sama sisi'),
+        h('p',{style:{color:'#92400e'}},'Warna: Kuning/oranye dengan tepi merah')
+      ),
+      h('p',{style:{color:'#475569',lineHeight:1.8,marginBottom:12}},'Rambu peringatan memberitahu pengemudi bahwa ada bahaya atau kondisi khusus di depan. Pengemudi harus mengurangi kecepatan!'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        ...[['↱','Tikungan Tajam'],['〰','Jalan Licin'],['✚','Persimpangan'],['🚂','Rel Kereta']].map(([s,l])=>
+          h('div',{key:l,style:{background:'#fff',borderRadius:12,padding:'12px',textAlign:'center',border:'2px solid #fbbf24'}},
+            h('div',{style:{fontSize:24,marginBottom:4}},s),
+            h('div',{style:{fontSize:12,fontWeight:700,color:'#92400e'}},l)
+          )
+        )
+      )
+    ),
+    h('div',{className:'animate-fade'},
+      h('h3',{style:{fontSize:20,color:'#991b1b',marginBottom:8}},'🚫 Rambu Larangan'),
+      h('div',{style:{background:'#fee2e2',borderRadius:16,padding:16,marginBottom:12}},
+        h('p',{style:{fontWeight:700,color:'#991b1b',marginBottom:4}},'Bentuk: Lingkaran'),
+        h('p',{style:{color:'#991b1b'}},'Warna: Dasar putih dengan tepi & garis merah')
+      ),
+      h('p',{style:{color:'#475569',lineHeight:1.8,marginBottom:12}},'Rambu larangan memberitahu pengguna jalan tentang hal-hal yang TIDAK BOLEH dilakukan. Melanggar rambu larangan bisa kena tilang!'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        ...[['—','Dilarang Masuk'],['P','Dilarang Parkir'],['40','Batas Kecepatan'],['↱','Dilarang Belok']].map(([s,l])=>
+          h('div',{key:l,style:{background:'#fff',borderRadius:12,padding:'12px',textAlign:'center',border:'2px solid #ef4444'}},
+            h('div',{style:{fontSize:22,fontWeight:700,color:'#ef4444',marginBottom:4}},s),
+            h('div',{style:{fontSize:12,fontWeight:700,color:'#991b1b'}},l)
+          )
+        )
+      )
+    ),
+    h('div',{className:'animate-fade'},
+      h('h3',{style:{fontSize:20,color:'#1e40af',marginBottom:8}},'🔵 Rambu Perintah'),
+      h('div',{style:{background:'#dbeafe',borderRadius:16,padding:16,marginBottom:12}},
+        h('p',{style:{fontWeight:700,color:'#1e40af',marginBottom:4}},'Bentuk: Lingkaran'),
+        h('p',{style:{color:'#1e40af'}},'Warna: Dasar biru dengan gambar/tanda putih')
+      ),
+      h('p',{style:{color:'#475569',lineHeight:1.8,marginBottom:12}},'Rambu perintah mewajibkan pengemudi untuk melakukan sesuatu. Harus dipatuhi tanpa pengecualian!'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        ...[['↰','Wajib Belok Kiri'],['↑','Wajib Lurus'],['↱','Wajib Belok Kanan'],['🚶','Jalur Pejalan']].map(([s,l])=>
+          h('div',{key:l,style:{background:'#3b82f6',borderRadius:12,padding:'12px',textAlign:'center'}},
+            h('div',{style:{fontSize:24,marginBottom:4}},s),
+            h('div',{style:{fontSize:12,fontWeight:700,color:'#fff'}},l)
+          )
+        )
+      )
+    ),
+    h('div',{className:'animate-fade'},
+      h('h3',{style:{fontSize:20,color:'#065f46',marginBottom:8}},'🟢 Rambu Petunjuk'),
+      h('div',{style:{background:'#d1fae5',borderRadius:16,padding:16,marginBottom:12}},
+        h('p',{style:{fontWeight:700,color:'#065f46',marginBottom:4}},'Bentuk: Persegi panjang / kotak'),
+        h('p',{style:{color:'#065f46'}},'Warna: Hijau dengan tulisan/gambar putih')
+      ),
+      h('p',{style:{color:'#475569',lineHeight:1.8,marginBottom:12}},'Rambu petunjuk memberikan informasi berguna bagi pengguna jalan seperti arah, lokasi fasilitas, dan nama tempat.'),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        ...[['🏥','Rumah Sakit'],['⛽','SPBU'],['P','Tempat Parkir'],['🍽','Rest Area']].map(([s,l])=>
+          h('div',{key:l,style:{background:'#22c55e',borderRadius:12,padding:'12px',textAlign:'center'}},
+            h('div',{style:{fontSize:24,marginBottom:4}},s),
+            h('div',{style:{fontSize:12,fontWeight:700,color:'#fff'}},l)
+          )
+        )
+      )
+    ),
+  ];
+  return h('div',{className:'screen animate-fade'},
+    h('div',{style:{background:'linear-gradient(135deg,#f97316,#ef4444)',borderRadius:24,padding:'20px',marginBottom:16,color:'#fff',textAlign:'center'}},
+      h('h2',{className:'fredoka',style:{fontSize:26,color:'#fff'}},'📚 Materi Pembelajaran')
+    ),
+    h('div',{style:{display:'flex',gap:8,overflowX:'auto',paddingBottom:8,marginBottom:16,WebkitOverflowScrolling:'touch'}},
+      tabs.map((t,i)=>h('button',{key:i,onClick:()=>setTab(i),style:{
+        background:tab===i?t.color:'#fff',color:tab===i?'#fff':'#475569',
+        border:`2px solid ${tab===i?t.color:'#e2e8f0'}`,borderRadius:50,
+        padding:'8px 16px',fontSize:13,fontWeight:700,cursor:'pointer',whiteSpace:'nowrap',
+        transition:'all .2s',fontFamily:'Nunito,sans-serif'
+      }},t.ic+' '+t.label))
+    ),
+    h('div',{className:'card',style:{minHeight:320,marginBottom:20}},contents[tab]),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'space-between'}},
+      h('button',{className:'btn btn-orange btn-sm',onClick:onBack},'← Kembali'),
+      h('button',{className:'btn btn-green',onClick:onNext},'Galeri Rambu →')
+    )
+  );
+}
+
+function GaleriScreen({onNext,onBack}){
+  const [selected,setSelected]=useState(null);
+  const [filter,setFilter]=useState('all');
+  const typeLabel={warning:'Peringatan',prohibition:'Larangan',command:'Perintah',info:'Petunjuk'};
+  const typeColor={warning:'#f59e0b',prohibition:'#ef4444',command:'#3b82f6',info:'#22c55e'};
+  const filtered=filter==='all'?DATA.rambuList:DATA.rambuList.filter(r=>r.type===filter);
+  return h('div',{className:'screen animate-fade'},
+    h('div',{style:{background:'linear-gradient(135deg,#a855f7,#ec4899)',borderRadius:24,padding:'20px',marginBottom:16,color:'#fff',textAlign:'center'}},
+      h('h2',{className:'fredoka',style:{fontSize:26,color:'#fff'}},'🖼️ Galeri Rambu Interaktif'),
+      h('p',{style:{color:'rgba(255,255,255,.85)',fontSize:14}},'Klik rambu untuk melihat keterangan!')
+    ),
+    h('div',{style:{display:'flex',gap:8,flexWrap:'wrap',marginBottom:16}},
+      [['all','Semua','#6366f1'],['warning','Peringatan','#f59e0b'],['prohibition','Larangan','#ef4444'],['command','Perintah','#3b82f6'],['info','Petunjuk','#22c55e']].map(([v,l,c])=>
+        h('button',{key:v,onClick:()=>{setFilter(v);setSelected(null);},style:{
+          background:filter===v?c:'#fff',color:filter===v?'#fff':'#475569',
+          border:`2px solid ${filter===v?c:'#e2e8f0'}`,borderRadius:50,
+          padding:'6px 14px',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'Nunito,sans-serif',transition:'all .2s'
+        }},l)
+      )
+    ),
+    h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(120px,1fr))',gap:12,marginBottom:16}},
+      filtered.map(r=>h('div',{key:r.id,className:`rambu-card${selected===r.id?' selected':''}`,
+        onClick:()=>setSelected(selected===r.id?null:r.id)},
+        h(RambuIcon,{rambu:r,size:64}),
+        h('div',{style:{fontSize:12,fontWeight:700,color:'#1e293b',marginBottom:4,lineHeight:1.3}},r.name),
+        h('div',{className:'badge',style:{background:r.bg||'#f1f5f9',color:typeColor[r.type],fontSize:10}},typeLabel[r.type])
+      ))
+    ),
+    selected&&h('div',{className:'card animate-fade',style:{background:DATA.rambuList.find(r=>r.id===selected)?.bg||'#f8fafc',marginBottom:16,border:`3px solid ${typeColor[DATA.rambuList.find(r=>r.id===selected)?.type]}`}},
+      (()=>{const r=DATA.rambuList.find(x=>x.id===selected);return r?[
+        h('div',{key:'head',style:{display:'flex',alignItems:'center',gap:16,marginBottom:8}},
+          h(RambuIcon,{rambu:r,size:56}),
+          h('div',null,
+            h('div',{style:{fontSize:16,fontWeight:800,color:'#1e293b'}},r.name),
+            h('div',{className:'badge',style:{background:'#fff',color:typeColor[r.type],marginTop:4}},typeLabel[r.type]+' Lalu Lintas')
+          )
+        ),
+        h('p',{key:'desc',style:{color:'#475569',lineHeight:1.7,fontWeight:600}},r.desc)
+      ]:null})()
+    ),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'space-between'}},
+      h('button',{className:'btn btn-orange btn-sm',onClick:onBack},'← Materi'),
+      h('button',{className:'btn btn-primary',onClick:onNext},'Game Tebak Rambu 🎮')
+    )
+  );
+}
+
+function GameScreen({onNext,onBack}){
+  const [idx,setIdx]=useState(0);
+  const [answered,setAnswered]=useState(null);
+  const [score,setScore]=useState(0);
+  const [done,setDone]=useState(false);
+  const q=DATA.gameRambu[idx];
+  const shapeMap={triangle:'triangle','circle-red':'circle-red','circle-blue':'circle-blue','square-green':'square-green'};
+  function choose(opt){
+    if(answered!==null)return;
+    const correct=opt===q.answer;
+    setAnswered(opt);
+    playSound(correct?'correct':'wrong');
+    if(correct)setScore(s=>s+1);
+    setTimeout(()=>{
+      if(idx<DATA.gameRambu.length-1){setIdx(i=>i+1);setAnswered(null);}
+      else setDone(true);
+    },1500);
+  }
+  if(done)return h('div',{className:'screen animate-fade',style:{textAlign:'center'}},
+    h('div',{style:{fontSize:64}},'🎮'),
+    h('h2',{className:'fredoka',style:{fontSize:30,color:'#1e40af',marginBottom:8}},'Game Selesai!'),
+    h('div',{style:{background:'linear-gradient(135deg,#3b82f6,#6366f1)',borderRadius:20,padding:'24px',marginBottom:20,color:'#fff'}},
+      h('div',{style:{fontSize:18,marginBottom:4}},'Kamu Benar'),
+      h('div',{className:'fredoka',style:{fontSize:56}},`${score}/${DATA.gameRambu.length}`),
+      h('div',{style:{opacity:.85}},'dari 5 pertanyaan')
+    ),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}},
+      h('button',{className:'btn btn-orange',onClick:()=>{setIdx(0);setAnswered(null);setScore(0);setDone(false)}},'🔄 Main Lagi'),
+      h('button',{className:'btn btn-primary',onClick:onNext},'Quiz Akhir 📝')
+    )
+  );
+  return h('div',{className:'screen animate-fade'},
+    h('div',{style:{background:'linear-gradient(135deg,#8b5cf6,#3b82f6)',borderRadius:24,padding:'20px',marginBottom:16,color:'#fff',textAlign:'center'}},
+      h('h2',{className:'fredoka',style:{fontSize:24,color:'#fff'}},'🎮 Game Tebak Rambu'),
+      h(ProgressBar,{current:idx+1,total:DATA.gameRambu.length})
+    ),
+    h('div',{className:'card',style:{textAlign:'center',marginBottom:16}},
+      h('div',{style:{marginBottom:12}},h(RambuSVG,{type:shapeMap[q.img]||q.img,color:q.color,size:110})),
+      h('p',{style:{color:'#64748b',fontSize:14,fontStyle:'italic'}},q.desc)
+    ),
+    h('p',{style:{fontWeight:700,fontSize:16,color:'#1e293b',marginBottom:12,textAlign:'center'}},'Rambu ini bernama...?'),
+    h('div',{style:{display:'grid',gap:10,marginBottom:20}},
+      q.opts.map(opt=>h('button',{key:opt,className:`quiz-opt${answered===opt?(opt===q.answer?' correct':' wrong'):''}${answered!==null&&opt===q.answer&&answered!==opt?' correct':''}`,
+        onClick:()=>choose(opt),disabled:answered!==null},
+        answered===opt&&opt===q.answer?'✅ ':'',
+        answered===opt&&opt!==q.answer?'❌ ':'',
+        opt
+      ))
+    ),
+    answered&&h('div',{className:'animate-fade',style:{textAlign:'center',fontSize:15,fontWeight:700,color:answered===q.answer?'#166534':'#991b1b'}},
+      answered===q.answer?'🎉 Jawaban Benar! Luar biasa!':'😅 Jawaban Salah! Yang benar: '+q.answer
+    ),
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginTop:16}},
+      h('button',{className:'btn btn-orange btn-sm',onClick:onBack},'← Galeri'),
+      h('div',{style:{fontWeight:700,color:'#6366f1',fontSize:15}},'Skor: '+score)
+    )
+  );
+}
+
+function QuizScreen({onFinish,onBack}){
+  const [idx,setIdx]=useState(0);
+  const [answers,setAnswers]=useState({});
+  const [selected,setSelected]=useState(null);
+  const [confirmed,setConfirmed]=useState(false);
+  const q=DATA.quizQuestions[idx];
+  function confirm(){
+    if(selected===null)return;
+    setAnswers(a=>({...a,[q.id]:selected}));
+    setConfirmed(true);
+    playSound(selected===q.ans?'correct':'wrong');
+  }
+  function next(){
+    if(idx<DATA.quizQuestions.length-1){setIdx(i=>i+1);setSelected(null);setConfirmed(false);}
+    else onFinish({...answers,[q.id]:selected});
+  }
+  return h('div',{className:'screen animate-fade'},
+    h('div',{style:{background:'linear-gradient(135deg,#22c55e,#16a34a)',borderRadius:24,padding:'20px',marginBottom:16,color:'#fff'}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+        h('div',{className:'fredoka',style:{fontSize:22,color:'#fff'}},'📝 Quiz Akhir'),
+        h('div',{style:{background:'rgba(255,255,255,.25)',borderRadius:50,padding:'4px 14px',fontSize:14,fontWeight:700}},`${idx+1}/10`)
+      ),
+      h('div',{style:{marginTop:10}},h(ProgressBar,{current:idx+1,total:10}))
+    ),
+    h('div',{className:'card',style:{marginBottom:16}},
+      h('p',{style:{fontSize:16,fontWeight:700,color:'#1e293b',lineHeight:1.6,marginBottom:16}},
+        `Soal ${idx+1}. `,q.q
+      ),
+      h('div',{style:{display:'grid',gap:10}},
+        q.opts.map((opt,i)=>{
+          let cls='quiz-opt';
+          if(confirmed){
+            if(i===q.ans)cls+=' correct';
+            else if(i===selected&&i!==q.ans)cls+=' wrong';
+          }else if(i===selected)cls+=' selected';
+          return h('button',{key:i,className:cls,onClick:()=>!confirmed&&setSelected(i),disabled:confirmed},
+            String.fromCharCode(65+i)+'. ',opt
+          );
+        })
+      )
+    ),
+    confirmed&&h('div',{className:'animate-fade',style:{background:selected===q.ans?'#dcfce7':'#fee2e2',borderRadius:16,padding:'12px 16px',marginBottom:12,fontWeight:700,color:selected===q.ans?'#166534':'#991b1b',textAlign:'center'}},
+      selected===q.ans?'🎉 Benar! Hebat sekali!':'❌ Kurang tepat. Jawabannya: '+q.opts[q.ans]
+    ),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'space-between'}},
+      h('button',{className:'btn btn-orange btn-sm',onClick:onBack,disabled:confirmed},'← Game'),
+      confirmed
+        ?h('button',{className:'btn btn-primary',onClick:next},idx<9?'Soal Berikutnya →':'Lihat Hasil 🏆')
+        :h('button',{className:'btn btn-green',onClick:confirm,disabled:selected===null},'Konfirmasi Jawaban ✓')
+    )
+  );
+}
+
+function HasilScreen({answers,onRestart}){
+  const total=DATA.quizQuestions.length;
+  const benar=DATA.quizQuestions.filter(q=>answers[q.id]===q.ans).length;
+  const pct=Math.round((benar/total)*100);
+  const getBadge=()=>{
+    if(pct>=90)return{ic:'🏆',label:'Juara Lalu Lintas',color:'#fbbf24',bg:'#fef3c7',msg:'Luar biasa! Kamu ahli rambu lalu lintas!'};
+    if(pct>=70)return{ic:'🥈',label:'Pengemudi Hebat',color:'#94a3b8',bg:'#f1f5f9',msg:'Bagus! Kamu sudah memahami rambu dengan baik.'};
+    if(pct>=50)return{ic:'🥉',label:'Pengemudi Pemula',color:'#f97316',bg:'#fff7ed',msg:'Lumayan! Coba pelajari lagi materi rambu.'};
+    return{ic:'📚',label:'Terus Belajar!',color:'#6366f1',bg:'#eff6ff',msg:'Jangan menyerah! Pelajari lagi dan coba kuis ulang.'};
+  };
+  const badge=getBadge();
+  return h('div',{className:'screen animate-fade',style:{textAlign:'center'}},
+    h('div',{style:{background:'linear-gradient(135deg,#f59e0b,#ef4444)',borderRadius:24,padding:'32px 24px',marginBottom:20,color:'#fff'}},
+      h('div',{style:{fontSize:72,animation:'bounce 1.5s infinite'}},badge.ic),
+      h('h2',{className:'fredoka',style:{fontSize:32,color:'#fff',marginBottom:4}},badge.label),
+      h('p',{style:{color:'rgba(255,255,255,.9)',fontSize:15}},badge.msg)
+    ),
+    h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:20}},
+      ...[
+        [benar,'Jawaban Benar','#22c55e','#dcfce7'],
+        [total-benar,'Jawaban Salah','#ef4444','#fee2e2'],
+        [pct+'%','Persentase','#6366f1','#eff6ff'],
+        [total,'Total Soal','#f59e0b','#fef9c3'],
+      ].map(([val,label,c,bg])=>
+        h('div',{key:label,style:{background:bg,borderRadius:20,padding:'20px 12px',border:`3px solid ${c}`}},
+          h('div',{className:'fredoka',style:{fontSize:36,color:c}},val),
+          h('div',{style:{fontSize:13,fontWeight:700,color:'#475569',marginTop:4}},label)
+        )
+      )
+    ),
+    h('div',{style:{background:'#f8fafc',borderRadius:20,padding:16,marginBottom:20,textAlign:'left'}},
+      h('p',{style:{fontWeight:700,color:'#1e293b',marginBottom:12,textAlign:'center'}},'📋 Rincian Jawaban'),
+      h('div',{style:{display:'grid',gap:6}},
+        DATA.quizQuestions.map((q,i)=>{
+          const benarQ=answers[q.id]===q.ans;
+          return h('div',{key:q.id,style:{display:'flex',gap:10,alignItems:'flex-start',background:benarQ?'#dcfce7':'#fee2e2',borderRadius:12,padding:'8px 12px'}},
+            h('span',{style:{fontSize:16,minWidth:20}},benarQ?'✅':'❌'),
+            h('span',{style:{fontSize:13,color:'#1e293b',lineHeight:1.5}},`Soal ${i+1}: ${q.q.substring(0,50)}...`)
+          );
+        })
+      )
+    ),
+    h('div',{style:{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}},
+      h('button',{className:'btn btn-primary',onClick:onRestart,style:{fontSize:16,padding:'14px 32px'}},'🔄 Mulai Ulang')
+    ),
+    h('p',{style:{color:'#94a3b8',fontSize:13,marginTop:16}},'Terus semangat belajar ya, Sobat! 🌟')
+  );
+}
+
+function App(){
+  const [screen,setScreen]=useState('landing');
+  const [quizAnswers,setQuizAnswers]=useState({});
+  const screens=['landing','tujuan','materi','galeri','game','quiz','hasil'];
+  const sIdx=screens.indexOf(screen);
+  const nav={
+    landing:{next:()=>setScreen('tujuan')},
+    tujuan:{next:()=>setScreen('materi'),back:()=>setScreen('landing')},
+    materi:{next:()=>setScreen('galeri'),back:()=>setScreen('tujuan')},
+    galeri:{next:()=>setScreen('game'),back:()=>setScreen('materi')},
+    game:{next:()=>setScreen('quiz'),back:()=>setScreen('galeri')},
+    quiz:{
+      finish:(ans)=>{setQuizAnswers(ans);setScreen('hasil');},
+      back:()=>setScreen('game')
+    },
+    hasil:{restart:()=>setScreen('landing')},
+  };
+  const topBar=screen!=='landing'&&h('div',{style:{background:'#fff',borderRadius:'0 0 20px 20px',padding:'10px 20px',display:'flex',alignItems:'center',justifyContent:'space-between',boxShadow:'0 2px 12px rgba(0,0,0,.08)',marginBottom:0,maxWidth:720,margin:'0 auto 0 auto'}},
+    h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+      h('span',{style:{fontSize:20}},'🚦'),
+      h('span',{className:'fredoka',style:{fontSize:16,color:'#1e40af'}},'Rambu Lalu Lintas')
+    ),
+    h('div',{style:{display:'flex',gap:4}},
+      screens.slice(1).map((s,i)=>h('div',{key:s,style:{
+        width:10,height:10,borderRadius:'50%',
+        background:sIdx-1>=i?'#6366f1':'#e2e8f0',transition:'background .3s'
+      }}))
+    )
+  );
+  return h('div',{style:{minHeight:600,background:'linear-gradient(135deg,#e0f2fe 0%,#f0fdf4 60%,#fef9c3 100%)'}},
+    topBar,
+    screen==='landing'&&h(LandingScreen,{onStart:nav.landing.next}),
+    screen==='tujuan'&&h(TujuanScreen,{onNext:nav.tujuan.next,onBack:nav.tujuan.back}),
+    screen==='materi'&&h(MateriScreen,{onNext:nav.materi.next,onBack:nav.materi.back}),
+    screen==='galeri'&&h(GaleriScreen,{onNext:nav.galeri.next,onBack:nav.galeri.back}),
+    screen==='game'&&h(GameScreen,{onNext:nav.game.next,onBack:nav.game.back}),
+    screen==='quiz'&&h(QuizScreen,{onFinish:nav.quiz.finish,onBack:nav.quiz.back}),
+    screen==='hasil'&&h(HasilScreen,{answers:quizAnswers,onRestart:nav.hasil.restart})
+  );
+}
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(h(App));
+</script>

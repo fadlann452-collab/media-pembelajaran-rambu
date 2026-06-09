@@ -1,0 +1,84 @@
+import React from 'react'
+import { motion } from 'framer-motion';
+import TopBar from '../components/TopBar';
+import guruPhoto from '../assets/guru.png';
+
+export default function ProfilGuruScreen({ onHome }) {
+  return (
+    <div className="min-h-screen">
+      <TopBar onHome={onHome} title="Profil Guru" subtitle="Mengenal Ibu/Bapak Guru" />
+      <div className="max-w-2xl mx-auto px-4 py-6 pb-28">
+
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-3xl p-6 mb-5 text-center shadow-lg shadow-purple-200 relative overflow-hidden"
+        >
+          <div className="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full" />
+          <motion.img
+            src={guruPhoto}
+            alt="Foto Guru"
+            animate={{ scale: [1, 1.03, 1] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+            className="w-32 h-32 object-cover rounded-full mx-auto mb-3 border-4 border-purple-300 shadow-xl bg-white p-1"
+          />
+          <div className="fredoka text-2xl text-white">Astriani Nayla Putri, S.Pd.</div>
+          <div className="text-purple-200 text-sm font-bold mt-1">Guru Kelas 4 SD Nusantara</div>
+          <div className="flex justify-center gap-3 mt-4 flex-wrap">
+            {['📍 Yogyakarta', '🎓 S1 PGSD', '⭐ 10 Tahun Mengajar'].map(t => (
+              <div key={t} className="bg-white/20 rounded-full px-3 py-1 text-xs font-bold text-white">{t}</div>
+            ))}
+          </div>    
+        </motion.div>
+
+        {[
+          {
+            icon: '💬', title: 'Kata Sambutan',
+            color: 'bg-blue-50 border-blue-200', text: 'text-blue-800',
+            body: 'Halo anak-anak yang hebat! Selamat datang di media pembelajaran interaktif Rambu Lalu Lintas. Semoga dengan belajar bersama Si Rambu, kalian semakin memahami pentingnya mematuhi rambu-rambu di jalan.',
+          },
+          {
+            icon: '📋', title: 'Mata Pelajaran',
+            color: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-800',
+            body: 'Tematik Terpadu Kelas 4 · Tema 4: "Berbagai Pekerjaan" · Sub Tema: Ada Rambu-Rambu · Muatan: PPKn & Bahasa Indonesia',
+          },
+          {
+            icon: '🎯', title: 'Kompetensi Dasar',
+            color: 'bg-green-50 border-green-200', text: 'text-green-800',
+            body: '3.3 Menjelaskan makna simbol sila-sila Pancasila. Dikaitkan dengan simbol/rambu lalu lintas sebagai aturan kehidupan bersama.',
+          },
+          {
+            icon: '📅', title: 'Alokasi Waktu',
+            color: 'bg-red-50 border-red-200', text: 'text-red-800',
+            body: '2 × 35 menit (1 pertemuan). Media ini dapat digunakan sebagai penguatan materi di dalam maupun luar kelas.',
+          },
+        ].map((c, i) => (
+          <motion.div
+            key={c.title}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className={`${c.color} border-2 rounded-2xl p-4 mb-3`}
+          >
+            <div className="flex items-start gap-3">
+              <span className="text-2xl flex-shrink-0">{c.icon}</span>
+              <div>
+                <div className={`font-extrabold ${c.text} mb-1`}>{c.title}</div>
+                <p className={`text-sm ${c.text} font-semibold leading-relaxed opacity-80`}>{c.body}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={onHome}
+          className="btn-next w-full justify-center mt-2"
+        >
+          🏠 Kembali ke Beranda
+        </motion.button>
+      </div>
+    </div>
+  );
+}
