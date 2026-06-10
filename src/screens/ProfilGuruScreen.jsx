@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import TopBar from '../components/TopBar';
-import guruPhoto from '../assets/guru.png';
+import guruPhoto from '../assets/guru2.png';
 
 export default function ProfilGuruScreen({ onHome }) {
   return (
@@ -22,7 +22,7 @@ export default function ProfilGuruScreen({ onHome }) {
             transition={{ repeat: Infinity, duration: 3 }}
             className="w-32 h-32 object-cover rounded-full mx-auto mb-3 border-4 border-purple-300 shadow-xl bg-white p-1"
           />
-          <div className="fredoka text-2xl text-white">Astriani Nayla Putri, S.Pd.</div>
+          <div className="fredoka text-2xl text-white">Astriani Naila Putri</div>
           <div className="text-purple-200 text-sm font-bold mt-1">Guru Kelas 4 SD Nusantara</div>
           <div className="flex justify-center gap-3 mt-4 flex-wrap">
             {['📍 Yogyakarta', '🎓 S1 PGSD', '⭐ 10 Tahun Mengajar'].map(t => (
@@ -33,9 +33,9 @@ export default function ProfilGuruScreen({ onHome }) {
 
         {[
           {
-            icon: '💬', title: 'Kata Sambutan',
+            icon: '💬', title: 'Profile',
             color: 'bg-blue-50 border-blue-200', text: 'text-blue-800',
-            body: 'Halo anak-anak yang hebat! Selamat datang di media pembelajaran interaktif Rambu Lalu Lintas. Semoga dengan belajar bersama Si Rambu, kalian semakin memahami pentingnya mematuhi rambu-rambu di jalan.',
+            body: 'Nama saya Astriani. Saya lahir di Jakarta, pada tanggal 14 Juni 2006. Saat ini saya merupakan mahasiswa Program Studi PGSD di universitas nahdlatul ulama Yogyakarta. Saya memiliki minat dalam bidang pendidikan, khususnya pembelajaran kreatif dan pendidikan inklusi. Sejak kecil, saya memiliki ketertarikan untuk belajar dan membantu orang lain. Hal tersebut membuat saya tertarik menjadi seorang pendidik di masa depan. Selama menempuh pendidikan, saya aktif mengikuti berbagai kegiatan akademik maupun organisasi untuk mengembangkan kemampuan diri. Saya memiliki cita-cita menjadi guru yang kreatif, sabar, dan mampu memberikan pembelajaran yang menyenangkan bagi peserta didik. Saya percaya bahwa pendidikan merupakan salah satu cara untuk membantu menciptakan masa depan yang lebih baik.',
           },
           {
             icon: '📋', title: 'Mata Pelajaran',

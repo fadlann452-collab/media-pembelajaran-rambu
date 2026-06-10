@@ -54,8 +54,8 @@ export default function TujuanScreen({ onHome }) {
           className="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-4 mb-5 text-center"
         >
           <p className="text-indigo-800 font-bold text-sm">
-            📋 Kompetensi Dasar 3.3 — Tematik Kelas 4<br />
-            <span className="text-indigo-600 font-semibold">Tema 4: Ada Rambu-Rambu · PPKn & Bahasa Indonesia</span>
+            📋 Tujuan Pembelajaran — Fase B Kelas 4<br />
+            <span className="text-indigo-600 font-semibold">Bahasa Indonesia: Menjelaskan Simbol Lalu Lintas</span>
           </p>
         </motion.div>
 
