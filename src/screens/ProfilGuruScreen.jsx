@@ -40,7 +40,7 @@ export default function ProfilGuruScreen({ onHome }) {
           {
             icon: '📋', title: 'Mata Pelajaran',
             color: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-800',
-            body: 'Tematik Terpadu Kelas 4 · Tema 4: "Berbagai Pekerjaan" · Sub Tema: Ada Rambu-Rambu · Muatan: PPKn & Bahasa Indonesia',
+            body: '📋 Tujuan Pembelajaran — Fase B Kelas 4 "Bahasa Indonesia: Menjelaskan Simbol Lalu Lintas',
           },
           {
             icon: '🎯', title: 'Kompetensi Dasar',
