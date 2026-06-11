@@ -40,7 +40,7 @@ export default function ProfilGuruScreen({ onHome }) {
           {
             icon: '📋', title: 'Mata Pelajaran',
             color: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-800',
-            body: 'Fase B Kelas 4 "Bahasa Indonesia: Menjelaskan Simbol Lalu Lintas',
+            body: 'Fase B Kelas 4 "Bahasa Indonesia: Belajar Rambu Lalu Lintas',
           },
           {
             icon: '🎯', title: 'Capaian Pembelajaran',
