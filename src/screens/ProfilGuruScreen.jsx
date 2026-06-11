@@ -43,9 +43,9 @@ export default function ProfilGuruScreen({ onHome }) {
             body: '📋 Tujuan Pembelajaran — Fase B Kelas 4 "Bahasa Indonesia: Menjelaskan Simbol Lalu Lintas',
           },
           {
-            icon: '🎯', title: 'Kompetensi Dasar',
+            icon: '🎯', title: 'Capaian Pembelajaran',
             color: 'bg-green-50 border-green-200', text: 'text-green-800',
-            body: '3.3 Menjelaskan makna simbol sila-sila Pancasila. Dikaitkan dengan simbol/rambu lalu lintas sebagai aturan kehidupan bersama.',
+            body: 'Peserta didik mampu mengidentifikasi makna simbol atau petunjuk di lingkungan sekitar, termasuk simbol/rambu lalu lintas, serta menjelaskan fungsinya dalam kehidupan sehari-hari ',
           },
           {
             icon: '📅', title: 'Alokasi Waktu',
