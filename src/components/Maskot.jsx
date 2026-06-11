@@ -55,7 +55,7 @@ export default function Maskot({ screen }) {
             >
                 🚦
             </motion.div>
-            <div className="fredoka text-xs text-blue-600 font-bold text-center">Si Rambu</div>
+            <div className="fredoka text-xs text-blue-600 font-bold text-center">Rambulas</div>
         </div>
     );
 }
