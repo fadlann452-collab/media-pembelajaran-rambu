@@ -70,7 +70,7 @@ return ( <div className="min-h-screen relative overflow-hidden bg-gradient-to-br
       </h1>
 
       <div className="inline-block bg-yellow-400 text-yellow-900 font-extrabold px-4 py-2 rounded-full text-sm mb-4">
-        🎒 Media Pembelajaran Edugame Simbol Lalu Lintas Berbasis Interaktif
+        🎒Multimedia Pembelajaran Rambu Lalu Lintas
       </div>
 
       <p className="max-w-xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed">

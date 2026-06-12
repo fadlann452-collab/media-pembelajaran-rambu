@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import TopBar from '../components/TopBar';
 import guruPhoto from '../assets/guru2.png';
 
-export default function ProfilGuruScreen({ onHome }) {
+export default function ProfilGuruScreen({ onHome, onBack }) {
   return (
     <div className="min-h-screen">
       <TopBar onHome={onHome} title="Profil Guru" subtitle="Mengenal Ibu/Bapak Guru" />
@@ -69,6 +69,13 @@ export default function ProfilGuruScreen({ onHome }) {
             </div>
           </motion.div>
         ))}
+
+        <button
+          onClick={onBack}
+          className="btn-back w-full justify-center mt-2"
+        >
+        ← Kembali ke Profil Pengajar
+        </button>
 
         <motion.button
           whileHover={{ scale: 1.02 }}

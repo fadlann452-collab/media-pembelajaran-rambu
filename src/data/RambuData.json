@@ -25,7 +25,10 @@
     { "id":4,"shape":"square","color":"#22c55e","desc":"Rambu persegi hijau dengan huruf P putih","answer":"Tempat Parkir","options":["Dilarang Parkir","Tempat Parkir","Pom Bensin","Rumah Sakit"] },
     { "id":5,"shape":"triangle","color":"#f59e0b","desc":"Rambu segitiga kuning dengan gambar rel kereta","answer":"Perlintasan Kereta","options":["Perlintasan Kereta","Dilarang Masuk","Stasiun Kereta","Jalan Rusak"] },
     { "id":6,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran merah dengan garis horizontal putih","answer":"Dilarang Masuk","options":["Dilarang Masuk","Batas Kecepatan","Wajib Berhenti","Dilarang Parkir"] },
-    { "id":7,"shape":"circle-cmd","color":"#3b82f6","desc":"Rambu lingkaran biru dengan panah melengkung ke kiri","answer":"Wajib Belok Kiri","options":["Dilarang Belok Kiri","Wajib Belok Kiri","Dilarang Belok Kanan","Wajib Putar Balik"] }
+    { "id":7,"shape":"circle-cmd","color":"#3b82f6","desc":"Rambu lingkaran biru dengan panah melengkung ke kiri","answer":"Wajib Belok Kiri","options":["Dilarang Belok Kiri","Wajib Belok Kiri","Dilarang Belok Kanan","Wajib Putar Balik"] },
+    { "id":9,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran merah dengan huruf P","amswer":"Dilarang Parkir","options":["Batas Kecepatan 60","Wajib 60 km/jam","Dilarang Parkir","Boleh Parkir"] },
+    { "id":8,"shape":"square","color":"#22c55e","desc":"Rambu persegi hijau dengan simbol rumah sakit","amswer":"Rumah Sakit","options":["Tempat Parkir","Rumah Sakit","SPBU","Area Istirahat"] },
+    { "id":10,"shape":"triangle","color":"#3f59e0b","desc":"Rambu segitiga kuning dengan tanda jalan licin","answer":"Jalan Licin","options":["Jalan Licin","Wajib Jalan Lurus","Jalan Satu Arah","Bebas Hambatan"] }
   ],
   "quizQuestions": [
     { "id":1,"question":"Rambu berbentuk segitiga berwarna kuning/oranye termasuk jenis rambu apa?","options":["Rambu Perintah","Rambu Peringatan","Rambu Larangan","Rambu Petunjuk"],"answer":1,"penjelasan":"Rambu peringatan selalu berbentuk segitiga dengan warna dasar kuning/oranye." },

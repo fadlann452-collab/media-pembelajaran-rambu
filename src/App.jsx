@@ -116,12 +116,14 @@ export default function App() {
     profilguru: (
       <ProfilGuruScreen
         onHome={goHome}
+        onBack={() => setScreen('profil')}
       />
     ),
 
     profildosen: (
       <ProfilDosenScreen
         onHome={goHome}
+        onBack={() => setScreen('profil')}
       />
     ),
 

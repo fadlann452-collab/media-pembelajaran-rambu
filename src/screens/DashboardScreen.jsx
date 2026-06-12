@@ -48,7 +48,7 @@ const MENU = [
     id: 'game',
     icon: '🎮',
     label: 'Game Tebak Rambu',
-    sub: '7 soal + skor langsung',
+    sub: '10 soal + skor langsung',
     color: 'from-pink-400 to-rose-500',
     shadow: 'shadow-red-200',
   },
