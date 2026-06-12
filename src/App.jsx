@@ -16,7 +16,7 @@ import GameScreen from './screens/GameScreen';
 import QuizScreen from './screens/QuizScreen';
 import HasilScreen from './screens/HasilScreen';
 
-import bgMusic from './assets/audio/gamelan.mp3';
+import bgMusic from './assets/audio/kids.mp3';
 
 const SLIDE = {
   initial: { opacity: 0, y: 20 },
