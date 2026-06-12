@@ -13,6 +13,9 @@ import TujuanScreen from './screens/TujuanScreen';
 import MateriScreen from './screens/MateriScreen';
 import GaleriScreen from './screens/GaleriScreen';
 import AktivitasScreen from './screens/AktivitasScreen';
+import AktivitasCocokkan from './screens/AktivitasCocokkan';
+import AktivitasFungsi from './screens/AktivitasFungsi';
+import AktivitasSimulasi from './screens/AktivitasSimulasi';
 import GameScreen from './screens/GameScreen';
 import QuizScreen from './screens/QuizScreen';
 import HasilScreen from './screens/HasilScreen';
@@ -157,6 +160,25 @@ export default function App() {
     aktivitas: (
       <AktivitasScreen
         onHome={goHome}
+        onMarkDone={() => markDone('aktivitas')}
+      />
+    ),
+
+    aktivitas_cocokkan: (
+      <AktivitasCocokkan
+        onHome={() => setScreen('aktivitas')}
+      />
+    ),
+
+    aktivitas_fungsi: (
+      <AktivitasFungsi
+        onHome={() => setScreen('aktivitas')}
+      />
+    ),
+
+    aktivitas_simulasi: (
+      <AktivitasSimulasi
+        onHome={() => setScreen('aktivitas')}
         onMarkDone={() => markDone('aktivitas')}
       />
     ),
