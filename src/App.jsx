@@ -5,6 +5,8 @@ import LandingScreen from './screens/LandingScreen';
 
 import Maskot from './components/Maskot';
 import DashboardScreen from './screens/DashboardScreen';
+import ProfilPengajarScreen from './screens/ProfilPengajarScreen';
+import ProfilDosenScreen from './screens/ProfilDosenScreen';
 import ProfilGuruScreen from './screens/ProfilGuruScreen';
 import PetunjukScreen from './screens/PetunjukScreen';
 import TujuanScreen from './screens/TujuanScreen';
@@ -104,7 +106,21 @@ export default function App() {
     ),
 
     profil: (
+      <ProfilPengajarScreen
+        onHome={goHome}
+        onGuru={() => setScreen('profilguru')}
+        onDosen={() => setScreen('profildosen')}
+      />
+    ),
+
+    profilguru: (
       <ProfilGuruScreen
+        onHome={goHome}
+      />
+    ),
+
+    profildosen: (
+      <ProfilDosenScreen
         onHome={goHome}
       />
     ),

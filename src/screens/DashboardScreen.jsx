@@ -7,7 +7,7 @@ const MENU = [
   {
     id: 'profil',
     icon: '👩‍🏫',
-    label: 'Profil Guru',
+    label: 'Profil Pengajar',
     sub: 'Kenali gurumu',
     color: 'from-violet-400 to-purple-500',
     shadow: 'shadow-purple-200',
