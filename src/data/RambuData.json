@@ -18,6 +18,27 @@
     { "id":16,"type":"info","name":"Tempat Parkir","desc":"Menunjukkan lokasi area parkir tersedia.","fungsi":"Membantu pengendara menemukan lokasi parkir resmi.","color":"#22c55e","shape":"square","symbol":"P","bg":"#d1fae5","borderColor":"#6ee7b7" },
     { "id":17,"type":"info","name":"Area Istirahat","desc":"Lokasi tempat istirahat dengan toilet dan makan.","fungsi":"Memberitahu pengendara jarak jauh tentang fasilitas istirahat.","color":"#22c55e","shape":"square","symbol":"🍽","bg":"#d1fae5","borderColor":"#6ee7b7" }
   ],
+
+  "aktivitas": [
+  {
+    "id": 1,
+    "type": "match",
+    "title": "Pasangkan Nama dan Rambu",
+    "instruction": "Cocokkan nama rambu dengan gambarnya."
+  },
+  {
+    "id": 2,
+    "type": "drag",
+    "title": "Kelompokkan Rambu",
+    "instruction": "Masukkan rambu ke kategori yang tepat."
+  },
+  {
+    "id": 3,
+    "type": "memory",
+    "title": "Memory Card",
+    "instruction": "Cari pasangan kartu rambu yang sama."
+  }
+],
   "gameRambu": [
     { "id":1,"shape":"triangle","color":"#f59e0b","desc":"Rambu segitiga kuning dengan tanda seru","answer":"Rambu Peringatan","options":["Rambu Larangan","Rambu Peringatan","Rambu Perintah","Rambu Petunjuk"] },
     { "id":2,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran putih tepi merah dengan angka 60","answer":"Batas Kecepatan 60","options":["Batas Kecepatan 60","Wajib 60 km/jam","Dilarang Masuk","Boleh Parkir"] },

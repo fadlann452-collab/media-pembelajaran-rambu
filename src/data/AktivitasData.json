@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "symbol": "—",
+    "shape": "circle",
+    "color": "#ef4444",
+    "question": "Apa arti rambu ini?",
+    "answer": "Tidak boleh masuk",
+    "options": [
+      "Tempat Parkir",
+      "Tidak boleh masuk",
+      "Rumah Sakit",
+      "SPBU"
+    ]
+  },
+
+  {
+    "id": 2,
+    "symbol": "⛽",
+    "shape": "square",
+    "color": "#22c55e",
+    "question": "Apa arti rambu ini?",
+    "answer": "SPBU",
+    "options": [
+      "Rumah Sakit",
+      "SPBU",
+      "Area Istirahat",
+      "Parkir"
+    ]
+  }
+]

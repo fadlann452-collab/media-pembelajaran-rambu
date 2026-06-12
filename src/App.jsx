@@ -12,6 +12,7 @@ import PetunjukScreen from './screens/PetunjukScreen';
 import TujuanScreen from './screens/TujuanScreen';
 import MateriScreen from './screens/MateriScreen';
 import GaleriScreen from './screens/GaleriScreen';
+import AktivitasScreen from './screens/AktivitasScreen';
 import GameScreen from './screens/GameScreen';
 import QuizScreen from './screens/QuizScreen';
 import HasilScreen from './screens/HasilScreen';
@@ -150,6 +151,13 @@ export default function App() {
       <GaleriScreen
         onHome={goHome}
         onMarkDone={() => markDone('galeri')}
+      />
+    ),
+
+    aktivitas: (
+      <AktivitasScreen
+        onHome={goHome}
+        onMarkDone={() => markDone('aktivitas')}
       />
     ),
 

@@ -45,6 +45,14 @@ const MENU = [
     shadow: 'shadow-green-200',
   },
   {
+    id: 'aktivitas',
+    icon: '🧩',
+    label: 'Aktivitas',
+    sub: 'Latihan interaktif',
+    color: 'from-cyan-400 to-sky-500',
+    shadow: 'shadow-cyan-200',
+  },
+  {
     id: 'game',
     icon: '🎮',
     label: 'Game Tebak Rambu',
@@ -72,10 +80,11 @@ const MENU = [
 
 // Section yang menambah progress %
 const PROGRESS_MAP = {
-  materi: 20,
-  galeri: 20,
-  game:   30,
-  quiz:   30,
+  materi: 15,
+  galeri: 15,
+  aktivitas: 25,
+  game:   20,
+  quiz:   20,
 };
 
 const container = {
