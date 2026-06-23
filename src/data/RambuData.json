@@ -48,7 +48,7 @@
     { "id":6,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran merah dengan garis horizontal putih","answer":"Dilarang Masuk","options":["Dilarang Masuk","Batas Kecepatan","Wajib Berhenti","Dilarang Parkir"] },
     { "id":7,"shape":"circle-cmd","color":"#3b82f6","desc":"Rambu lingkaran biru dengan panah melengkung ke kiri","answer":"Wajib Belok Kiri","options":["Dilarang Belok Kiri","Wajib Belok Kiri","Dilarang Belok Kanan","Wajib Putar Balik"] },
     { "id":9,"shape":"circle","color":"#ef4444","desc":"Rambu lingkaran merah dengan huruf P","answer":"Dilarang Parkir","options":["Batas Kecepatan 60","Wajib 60 km/jam","Dilarang Parkir","Boleh Parkir"] },
-    { "id":15,"shape":"square","symbol":"⛽","bg":"#d1fae5","borderColor":"#6ee7b7","color":"#22c55e","desc":"Rambu persegi hijau dengan simbol rumah sakit","answer":"Rumah Sakit","options":["Tempat Parkir","Rumah Sakit","SPBU","Area Istirahat"] },
+    { "id":15,"shape":"square","symbol":"⛽","bg":"#d1fae5","borderColor":"#6ee7b7","desc":"Rambu persegi hijau dengan simbol rumah sakit","answer":"Rumah Sakit","options":["Tempat Parkir","Rumah Sakit","SPBU","Area Istirahat"] },
     { "id":10,"shape":"triangle","color":"#3f59e0b","desc":"Rambu segitiga kuning dengan tanda jalan licin","answer":"Jalan Licin","options":["Jalan Licin","Wajib Jalan Lurus","Jalan Satu Arah","Bebas Hambatan"] }
   ],
   "quizQuestions": [
