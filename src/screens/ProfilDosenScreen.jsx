@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import TopBar from '../components/TopBar';
-import guruPhoto from '../assets/guru2.png';
+import guruPhoto from '../assets/guru1.png';
 
 export default function ProfilGuruScreen({ onHome, onBack }) {
   return (
