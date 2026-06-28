@@ -63,6 +63,14 @@ const PAIRS = [
     symbol: '🚂',
     fungsi: 'Memperingatkan pengemudi untuk berhenti sebelum menyeberangi rel.',
   },
+   {
+    id: 7,
+    rambu:  '',
+    shape:  '',
+    color:  '',
+    symbol: '',
+    fungsi: 'Permukaan jalan licin, terutama saat hujan. Hati-hati!',
+  },
 ];
 
 // Shuffle helper (Fisher-Yates)
