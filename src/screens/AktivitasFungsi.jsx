@@ -55,6 +55,14 @@ const PAIRS = [
     symbol: 'P',
     fungsi: 'Melarang kendaraan berhenti dan parkir di area ini',
   },
+   {
+    id: 7,
+    rambu:  'Perlintasan Kereta Api',
+    shape:  'triangle',
+    color:  '#f59e0b',
+    symbol: '🚂',
+    fungsi: 'Memperingatkan pengemudi untuk berhenti sebelum menyeberangi rel.',
+  },
 ];
 
 // Shuffle helper (Fisher-Yates)
