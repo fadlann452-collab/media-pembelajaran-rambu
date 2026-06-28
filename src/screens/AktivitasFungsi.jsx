@@ -63,13 +63,16 @@ const PAIRS = [
     symbol: '🚂',
     fungsi: 'Memperingatkan pengemudi untuk berhenti sebelum menyeberangi rel.',
   },
-   {
-    id: 7,
-    rambu:  '',
-    shape:  '',
-    color:  '',
-    symbol: '',
-    fungsi: 'Permukaan jalan licin, terutama saat hujan. Hati-hati!',
+];
+// DATA JEBAKAN
+const DECOY_FUNCTIONS = [
+  {
+    id: 101,
+    fungsi: 'Menunjukkan lokasi pelabuhan feri',
+  },
+  {
+    id: 102,
+    fungsi: 'Wajib menggunakan helm proyek',
   },
 ];
 
@@ -87,9 +90,16 @@ function shuffle(arr) {
 export default function AktivitasFungsi({ onBack, onComplete }) {
   // Kartu fungsi dikocok sekali saat mount
   const shuffledFungsi = useMemo(
-    () => shuffle(PAIRS.map((p) => ({ id: p.id, text: p.fungsi }))),
-    []
-  );
+  () =>
+    shuffle([
+      ...PAIRS.map((p) => ({
+        id: p.id,
+        text: p.fungsi,
+      })),
+      ...DECOY_FUNCTIONS,
+    ]),
+  []
+);
 
   // selectedRambu : id pair yang rambu-nya dipilih
   const [selectedRambu, setSelectedRambu] = useState(null);
@@ -101,7 +111,7 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
   // attemptCount untuk statistik
   const [attempts,      setAttempts]      = useState(0);
 
-  const score = matched.size;
+  const score = matched.size; 
   const total = PAIRS.length;
 
   // ── Klik kartu Rambu (kiri) ───────────
@@ -138,6 +148,10 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
   }
 
   const accuracy = attempts > 0 ? Math.round((score / attempts) * 100) : 0;
+  const progressPercent = Math.round(
+  (matched.size / PAIRS.length) * 100
+  const matchedPairs = PAIRS.filter((p) => matched.has(p.id));
+  );
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -195,6 +209,16 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
               />
             ))}
           </div>
+          <div className="mt-3 bg-white/20 rounded-full h-3 overflow-hidden">
+          <div
+              className="bg-white h-full transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+
+          <div className="text-white text-xs font-bold mt-1">
+            {progressPercent}% selesai
+        </div>
         </motion.div>
 
         {/* ── Hint bar ── */}
@@ -360,6 +384,51 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
           </motion.div>
         )}
       </div>
+      {/* Pasangan Berhasil */}
+{matchedPairs.length > 0 && (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="mt-8"
+  >
+    <div
+      className="text-lg text-slate-700 mb-4"
+      style={{ fontFamily: "'Fredoka One', cursive" }}
+    >
+      🎉 Pasangan Berhasil
+    </div>
+
+    <div className="space-y-4">
+      {matchedPairs.map((pair) => (
+        <motion.div
+          key={pair.id}
+          layout
+          className="bg-green-50 border-2 border-green-300 rounded-3xl p-4"
+        >
+          {/* Rambu */}
+          <div className="flex justify-center">
+            <div className="bg-white rounded-2xl px-4 py-2 shadow-sm font-bold text-green-700">
+              {pair.rambu}
+            </div>
+          </div>
+
+          {/* Garis */}
+          <div className="flex flex-col items-center my-2">
+            <span className="text-green-500 text-xl">│</span>
+            <span className="text-green-500 text-xl">▼</span>
+          </div>
+
+          {/* Fungsi */}
+          <div className="flex justify-center">
+            <div className="bg-white rounded-2xl px-4 py-3 shadow-sm text-center text-sm text-slate-700">
+              {pair.fungsi}
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </motion.div>
+)}
 
       {/* ── Modal Sukses ── */}
       <AnimatePresence>
