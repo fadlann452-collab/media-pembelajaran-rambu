@@ -154,7 +154,6 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
   const accuracy = attempts > 0 ? Math.round((score / attempts) * 100) : 0;
   const progressPercent = Math.round(
   (matched.size / PAIRS.length) * 100
-  const matchedPairs = PAIRS.filter((p) => matched.has(p.id));
   );
 
   return (
