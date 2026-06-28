@@ -67,11 +67,11 @@ const PAIRS = [
 // DATA JEBAKAN
 const DECOY_FUNCTIONS = [
   {
-    id: 101,
+    id: 8,
     fungsi: 'Menunjukkan lokasi pelabuhan feri',
   },
   {
-    id: 102,
+    id: 9,
     fungsi: 'Wajib menggunakan helm proyek',
   },
 ];
@@ -96,7 +96,10 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
         id: p.id,
         text: p.fungsi,
       })),
-      ...DECOY_FUNCTIONS,
+      ...DECOY_FUNCTIONS.map((d) => ({
+        id: d.id,
+        text: d.fungsi,
+      })),
     ]),
   []
 );
@@ -130,6 +133,7 @@ export default function AktivitasFungsi({ onBack, onComplete }) {
     if (selectedRambu === fungsiId) {
       // ✅ Cocok!
       playCorrect();
+      navigator.vibrate?.(100);
       const newMatched = new Set(matched);
       newMatched.add(fungsiId);
       setMatched(newMatched);
