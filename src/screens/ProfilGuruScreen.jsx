@@ -37,21 +37,7 @@ export default function ProfilGuruScreen({ onHome, onBack }) {
             color: 'bg-blue-50 border-blue-200', text: 'text-blue-800',
             body: 'Nama saya Astriani. Saya lahir di Jakarta, pada tanggal 14 Juni 2006. Saat ini saya merupakan mahasiswa Program Studi PGSD di universitas nahdlatul ulama Yogyakarta. Saya memiliki minat dalam bidang pendidikan, khususnya pembelajaran kreatif dan pendidikan inklusi. Sejak kecil, saya memiliki ketertarikan untuk belajar dan membantu orang lain. Hal tersebut membuat saya tertarik menjadi seorang pendidik di masa depan. Selama menempuh pendidikan, saya aktif mengikuti berbagai kegiatan akademik maupun organisasi untuk mengembangkan kemampuan diri. Saya memiliki cita-cita menjadi guru yang kreatif, sabar, dan mampu memberikan pembelajaran yang menyenangkan bagi peserta didik. Saya percaya bahwa pendidikan merupakan salah satu cara untuk membantu menciptakan masa depan yang lebih baik.',
           },
-          {
-            icon: '📋', title: 'Mata Pelajaran',
-            color: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-800',
-            body: 'Fase B Kelas 4 "Bahasa Indonesia: Belajar Rambu Lalu Lintas',
-          },
-          {
-            icon: '🎯', title: 'Capaian Pembelajaran',
-            color: 'bg-green-50 border-green-200', text: 'text-green-800',
-            body: 'Peserta didik mampu mengidentifikasi makna simbol atau petunjuk di lingkungan sekitar, termasuk simbol/rambu lalu lintas, serta menjelaskan fungsinya dalam kehidupan sehari-hari ',
-          },
-          {
-            icon: '📅', title: 'Alokasi Waktu',
-            color: 'bg-red-50 border-red-200', text: 'text-red-800',
-            body: '2 × 35 menit (1 pertemuan). Media ini dapat digunakan sebagai penguatan materi di dalam maupun luar kelas.',
-          },
+          
         ].map((c, i) => (
           <motion.div
             key={c.title}

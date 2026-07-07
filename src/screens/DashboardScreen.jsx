@@ -21,6 +21,14 @@ const MENU = [
     shadow: 'shadow-blue-200',
   },
   {
+    id: 'informasi',
+    icon: '📋',
+    label: 'Informasi Pembelajaran',
+    sub: 'Informasi materi yang dipelajari',
+    color: 'from-cyan-400 to-blue-500',
+    shadow: 'shadow-cyan-200',
+  },
+  {
     id: 'tujuan',
     icon: '🎯',
     label: 'Tujuan Pembelajaran',
@@ -275,4 +283,5 @@ export default function DashboardScreen({ onNavigate, progress }) {
       </motion.p>
     </div>
   );
-}
+
+};

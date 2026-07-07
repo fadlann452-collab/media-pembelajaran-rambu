@@ -9,6 +9,7 @@ import ProfilPengajarScreen from './screens/ProfilPengajarScreen';
 import ProfilDosenScreen from './screens/ProfilDosenScreen';
 import ProfilGuruScreen from './screens/ProfilGuruScreen';
 import PetunjukScreen from './screens/PetunjukScreen';
+import InformasiPembelajaranScreen from './screens/InformasiPembelajaranScreen';
 import TujuanScreen from './screens/TujuanScreen';
 import MateriScreen from './screens/MateriScreen';
 import GaleriScreen from './screens/GaleriScreen';
@@ -133,6 +134,12 @@ export default function App() {
 
     petunjuk: (
       <PetunjukScreen
+        onHome={goHome}
+      />
+    ),
+
+    informasi: (
+      <InformasiPembelajaranScreen
         onHome={goHome}
       />
     ),

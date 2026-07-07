@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import TopBar from '../components/TopBar';
 import guruPhoto from '../assets/guru1.png';
 
-export default function ProfilGuruScreen({ onHome, onBack }) {
+export default function ProfilDosenScreen({ onHome, onBack }) {
   return (
     <div className="min-h-screen">
       <TopBar onHome={onHome} title="Profil Dosen" subtitle="Mengenal Ibu Dosen" />
@@ -37,21 +37,7 @@ export default function ProfilGuruScreen({ onHome, onBack }) {
             color: 'bg-blue-50 border-blue-200', text: 'text-blue-800',
             body: 'Lahir di Bantul Yogyakartapada 22 Oktober 1997. Beliau menempuh pendidikan di S1 PGSD FIP UNY pada tahun 2015 hingga 2019, tak lama dari itu, kemudian beliau langsung melanjutkan pendidikannya pada strata 2 atau S2 pada program studi S2 Pendidikan Dasar FIP UNY hingga lulus pada tahun 2021. Kemudian setelah lulus, beliau berusaha mencari pengalaman kerja sebagai guru di SD. Pada tahun 2022, beliau  melanjutkan pendidikan S3 atau doktoral di Pendidikan Dasar FIPP UNY. dan sekarang ibu Ayu bekerja sebagai dosen di UNU Yogyakarta dari tahun 2025-sekarang.',
           },
-          {
-            icon: '📋', title: 'Mata Pelajaran',
-            color: 'bg-yellow-50 border-yellow-200', text: 'text-yellow-800',
-            body: 'Fase B Kelas 4 "Bahasa Indonesia: Belajar Rambu Lalu Lintas',
-          },
-          {
-            icon: '🎯', title: 'Capaian Pembelajaran',
-            color: 'bg-green-50 border-green-200', text: 'text-green-800',
-            body: 'Peserta didik mampu mengidentifikasi makna simbol atau petunjuk di lingkungan sekitar, termasuk simbol/rambu lalu lintas, serta menjelaskan fungsinya dalam kehidupan sehari-hari ',
-          },
-          {
-            icon: '📅', title: 'Alokasi Waktu',
-            color: 'bg-red-50 border-red-200', text: 'text-red-800',
-            body: '2 × 35 menit (1 pertemuan). Media ini dapat digunakan sebagai penguatan materi di dalam maupun luar kelas.',
-          },
+          
         ].map((c, i) => (
           <motion.div
             key={c.title}
