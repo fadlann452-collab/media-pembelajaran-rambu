@@ -88,9 +88,9 @@ return ( <div className="min-h-screen relative overflow-hidden bg-gradient-to-br
     >
       <div className="text-3xl mb-2"></div>
       <p className="text-slate-700 font-semibold">
-        Oleh: Astriani Naila Putri  || 242221096
-        <br /> -----
-        Dosen Pengampu: Dr.Wahyu Purwaningsih M,Pd
+        Oleh: <br/> Astriani Naila Putri  || 242221096
+        <br /> ----- <br/>
+        Dosen Pengampu: <br/>Dr.Wahyu Purwaningsih M,Pd
       </p>
       <p className="text-sm text-slate-500 mt-1">
       
